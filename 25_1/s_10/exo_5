@@ -1,0 +1,107 @@
+Problem 1
+
+Connected + no cycles
+A piece of a forest (forest = graph with no cycles)
+Connected with exactly V-1 edges
+Removing any edge breaks connectivity
+No cycles + at least V-1 edges
+Adding any edge creates a cycle
+Exactly one path between any two vertices
+
+
+
+1 → 2:
+If we have a connected acyclic graph (Def 1), then it's automatically one connected component. 
+A forest is defined as an acyclic graph, so our graph is one component of a forest
+
+2 → 1:
+If it's one component of a forest, then by definition it's connected (one component) and acyclic (since forests are acyclic)
+
+1 → 3:
+A connected acyclic graph must have exactly V-1 edges. Let me prove this by induction:
+Base case: V=1, 0 edges 
+Assume true for V=k vertices
+Add vertex k+1: to maintain connectivity without cycles, we need exactly 1 new edge
+So for V=k+1, we have (k-1)+1 = k edges 
+If we had fewer than V-1 edges, the graph couldn't be connected; if more, cycles would appear
+
+3 → 4:
+A connected graph with exactly V-1 edges is minimally connected. Why? If we remove any edge, we'd have V-2 edges, 
+which is insufficient to connect V vertices (minimum V-1 edges needed for connectivity)
+
+4 → 5:
+A minimally connected graph must be acyclic. If there were a cycle, we could remove any edge from that cycle without disconnecting the graph, 
+contradicting minimal connectivity. Since it's conected and minimal it has exactly V-1 edges, which satisfies "acyclic with at least V-1 edges"
+
+5 → 6:
+An acyclic graph with at least V-1 edges must have exactly V-1 edges(since more would create cycles). 
+This makes it maximally acyclic: adding any edge between non-adjacent vertices would create a cycle (because there's already exactly 1 path between them)
+
+6 → 7:
+A maximally acyclic graph has unique paths between all vertices. If there were no path between two vertices, 
+we could add an edge without creating a cycle. If there were multiple paths between vertices, a cycle would already exist
+
+7 → 1:
+If there's a unique path between each pair of vertices, the graph is clearly connected. 
+It's also acyclic because any cycle would provide two different paths between the same vertices
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Problem 2
+
+
+--- GRAPH 1 (Undirected)
+
+CSC Representation:
+col_pointers = [0 2 5 8 11 12]
+row_indices  = [12 023 013 124 3]
+values       = [11 111 111 111 1]
+
+Adjacency Matrix
+    A  B  C  D  E
+A: 0  1  1  0  0  
+B: 1  0  1  1  0  
+C: 1  1  0  1  0  
+D: 0  1  1  0  1  
+E: 0  0  0  1  0  
+
+Graph Diagram (Adjacency List)
+A: B C
+B: A C D
+C: A B D
+D: B C E
+E: D
+
+Edges: A-B, A-C, B-C, B-D, C-D, D-E
+
+No cycle
+
+
+
+--- GRAPH 2 (directed)
+
+CSC Representation:
+col_pointers = [0 0 2 4 5 7]
+row_indices  = [03 01 2 13]
+values       = [11 11 1 11]
+
+Adjacency Matrix
+    A  B  C  D  E
+A: 0  0  0  0  0  
+B: 1  0  0  1  0  
+C: 1  1  0  0  0  
+D: 0  0  1  0  0  
+E: 0  1  0  1  0  
+
+Graph Diagram (Adjacency List)
+A: no outgoing edges
+B: A D
+C: A B
+D: C
+E: B D
+
+Edges: B-A, B-D, C-A, C-B, D-C, E-B, E-D
+Unique Cycle: B → D → C → B
